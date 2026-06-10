@@ -1,0 +1,1 @@
+-- Initial migration for Steakz MIS. Run `npx prisma migrate dev --name init` to generate this automatically in a live PostgreSQL environment.
