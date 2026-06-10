@@ -84,7 +84,7 @@ export function LandingPage() {
   };
 
   useEffect(() => {
-    axios.get('/api/admin/branches')
+    axios.get('/api/branches')
       .then(res => {
         const enriched = res.data.map((b: any) => ({
           ...b,

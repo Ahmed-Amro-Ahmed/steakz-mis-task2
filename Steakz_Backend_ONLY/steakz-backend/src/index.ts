@@ -8,6 +8,7 @@ import inventoryRoutes from './routes/inventoryRoutes.js';
 import salesRoutes from './routes/salesRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
+import branchRoutes from './routes/branchRoutes.js';
 import { seedDatabase } from './lib/seed.js';
 
 const app = express();
@@ -51,6 +52,7 @@ app.use('/api/inventory', inventoryRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/branches', branchRoutes);
 
 app.listen(port, async () => {
   await seedDatabase();
