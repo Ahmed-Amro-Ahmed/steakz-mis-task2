@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-import cors from 'cors';
 import { requestLogger } from './middleware/logger.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
@@ -14,32 +13,29 @@ import { seedDatabase } from './lib/seed.js';
 const app = express();
 const port = process.env['PORT'] || 3001;
 
-const manualAllowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://steakz-mis-task2.vercel.app',
-  process.env['FRONTEND_URL'],
-].filter(Boolean) as string[];
-
 app.use((req, res, next) => {
   const origin = req.headers.origin;
 
-  const isAllowed =
+  const allowed =
     !origin ||
-    manualAllowedOrigins.includes(origin) ||
-    origin.endsWith('.vercel.app');
+    origin === "http://localhost:5173" ||
+    origin === "http://localhost:3000" ||
+    origin === "https://steakz-mis-task2.vercel.app" ||
+    origin === process.env.FRONTEND_URL ||
+    origin.endsWith(".vercel.app");
 
-  if (origin && isAllowed) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+  if (origin && allowed) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
   }
 
-  res.setHeader('Vary', 'Origin');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader("Vary", "Origin");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-  if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+  if (req.method === "OPTIONS") {
+    res.status(204).send();
+    return;
   }
 
   next();
