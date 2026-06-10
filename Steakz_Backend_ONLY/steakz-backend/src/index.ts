@@ -14,36 +14,35 @@ import { seedDatabase } from './lib/seed.js';
 const app = express();
 const port = process.env['PORT'] || 3001;
 
-const allowedOrigins = [
+const manualAllowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://steakz-mis-task2.vercel.app',
-  process.env['FRONTEND_URL']
+  process.env['FRONTEND_URL'],
 ].filter(Boolean) as string[];
 
-const corsOptions: cors.CorsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-
-// Safe preflight middleware to handle OPTIONS requests without wildcard routing issues
 app.use((req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    cors(corsOptions)(req, res, next);
-  } else {
-    next();
+  const origin = req.headers.origin;
+
+  const isAllowed =
+    !origin ||
+    manualAllowedOrigins.includes(origin) ||
+    origin.endsWith('.vercel.app');
+
+  if (origin && isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
   }
+
+  res.setHeader('Vary', 'Origin');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
+  next();
 });
 
 app.use(express.json());
