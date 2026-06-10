@@ -6,6 +6,14 @@ Steakz MIS is a comprehensive, multi-branch Management Information System design
 
 This project was built for **MIS Task 2**, focusing on **Role-Based Access Control (RBAC)**, **Multi-Branch Isolation**, and **Real-Time Inventory Awareness**.
 
+## Live Deployment Links
+
+- **GitHub Repository:** https://github.com/Ahmed-Amro-Ahmed/steakz-mis-task2
+- **Live Frontend (Vercel):** https://steakz-mis-task2.vercel.app
+- **Live Backend (Render):** https://steakz-mis-backend-v0hz.onrender.com
+
+> Note: The Render backend is hosted on a free instance and may take a short time to wake up after inactivity.
+
 ### Key Folders
 - **Backend**: `Steakz_Backend_ONLY/steakz-backend`
 - **Frontend**: `Steakz_Frontend_ONLY/steakz-frontend`
