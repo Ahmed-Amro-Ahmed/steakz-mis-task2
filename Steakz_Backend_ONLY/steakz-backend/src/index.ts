@@ -36,7 +36,15 @@ const corsOptions: cors.CorsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+
+// Safe preflight middleware to handle OPTIONS requests without wildcard routing issues
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    cors(corsOptions)(req, res, next);
+  } else {
+    next();
+  }
+});
 
 app.use(express.json());
 app.use(requestLogger);
