@@ -24,13 +24,13 @@ This document lists the actual implemented endpoints for the Steakz Management I
 | GET | `/api/manager/suppliers` | Yes | BRANCH_MANAGER | List all food suppliers |
 | POST | `/api/manager/suppliers` | Yes | BRANCH_MANAGER | Add a new food supplier |
 | **Inventory** | | | | |
-| GET | `/api/inventory` | Yes | ALL ROLES | View inventory items (Branch or All) |
+| GET | `/api/inventory` | Yes | ADMIN, HQ, BRANCH_MANAGER, CHEF, CASHIER, WAITER | View inventory items |
 | POST | `/api/inventory` | Yes | ADMIN, BRANCH_MANAGER | Add a new item to inventory |
 | PATCH | `/api/inventory/:id/quantity` | Yes | ADMIN, BRANCH_MANAGER, CHEF | Manually update stock levels |
 | **Sales & Orders** | | | | |
-| POST | `/api/sales` | Yes | CASHIER, WAITER, BRANCH_MANAGER, CUSTOMER | Create a sale/order; customers can place branch-targeted orders, staff can record POS sales. |
-| GET | `/api/sales/mine` | Yes | ALL ROLES (incl. CUSTOMER) | View recent sales/orders filtered by role/customer. |
-| PATCH | `/api/sales/:id/status` | Yes | CHEF, CASHIER, WAITER, BRANCH_MANAGER, ADMIN, HEADQUARTER_MANAGER | Update order status according to role workflow. |
+| POST | `/api/sales` | Yes | CASHIER, WAITER, BRANCH_MANAGER, CUSTOMER | Create a new sale or customer order |
+| GET | `/api/sales/mine` | Yes | ALL ROLES | View recent sales/orders filtered by role/customer |
+| PATCH | `/api/sales/:id/status` | Yes | CHEF, CASHIER, WAITER, BRANCH_MANAGER, ADMIN, HQ_MANAGER | Update order status (PREPARING, READY, COMPLETED, etc.) |
 | **Reports** | | | | |
 | GET | `/api/reports/summary` | Yes | ADMIN, HQ, BRANCH_MANAGER | Get financial and inventory summary report |
 | GET | `/api/reports/sales` | Yes | ADMIN, HQ, BRANCH_MANAGER | Get detailed sales breakdown report |
@@ -38,3 +38,5 @@ This document lists the actual implemented endpoints for the Steakz Management I
 | POST | `/api/feedback` | No | Public | Submit customer feedback |
 | GET | `/api/feedback/public` | No | Public | Get top 10 latest feedbacks for Landing Page |
 | GET | `/api/feedback` | Yes | ADMIN, HQ, BRANCH_MANAGER | View customer feedback |
+| **Public Information** | | | | |
+| GET | `/api/branches` | No | Public | Get basic branch info (Name, Location, Phone) for Landing Page |
